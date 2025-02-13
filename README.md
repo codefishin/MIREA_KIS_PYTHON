@@ -111,13 +111,13 @@ from subprocess import Popen, PIPE
 # ...
 
 ```
-### Пишите 2 enter после import
+### Пишите 2 enter после import / функций
 Пример ошибки:
 ```
 import math
 def main():
   # ...
-
+def func():
 ```
 Правильный пример:
 ```
@@ -126,6 +126,9 @@ import math
 
 def main():
   # ...
+
+
+def func():
 
 ```
 # P.S.
