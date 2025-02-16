@@ -1,6 +1,4 @@
 import sys
-import math
-import tkinter as tk
 sys.setrecursionlimit(5000)
 
 def f1_1() -> None:
@@ -151,7 +149,7 @@ def mul_bits(x, y, bits):
     return x * y
 
 
-def f3_7(x, y):
+def f3_7(x: int, y: int) -> int:
     x0 = x & 0xFF # младшие 8 бит
     x1 = (x >> 8) & 0xFF # старшие
 
@@ -186,9 +184,61 @@ def f3_10():
     return 0
 
 
-
 def main():
-    f1_1()
+    while 1:
+        var_type = input("Введите главу задания (от 1 до 3)\n0 завершит программу")
+        if var_type == "0":
+            break
+        elif var_type == "2":
+            f2()
+        elif var_type == "1":
+            var_task = input("Введите задание (от 1 до 8)")  # 8
+            match var_task:  # ОСТОРОЖНО, РАБОТАЕТ ТОЛЬКО ОТ PYTHON 3.11 И ВЫШЕ
+                case "1":
+                    f1_1()
+                case "2":
+                    f1_2()
+                case "3":
+                    print(f1_3())
+                case "4":
+                    f1_4()
+                case "5":
+                    f1_5()
+                case "6":
+                    f1_6()
+                case "7":
+                    f1_7()
+                case "8":
+                    f1_8()
+                case _:
+                    print("Error!\nЗадания не существует")
+        elif var_type == "3":
+            var_task = input("Введите задание (от 1 до 10)")  # 10
+            match var_task:  # ОСТОРОЖНО, РАБОТАЕТ ТОЛЬКО ОТ PYTHON 3.11 И ВЫШЕ
+                case "1":
+                    print(f3_1(float(input("Введите x (float)"))))
+                case "2":
+                    print(f3_2(float(input("Введите x (float)"))))
+                case "3":
+                    print(f3_3(float(input("Введите x (float)"))))
+                case "4":
+                    print(f3_4(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                case "5":
+                    print(f3_5(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                case "6":
+                    print(f3_6(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                case "7":
+                    print(f3_7(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                case "8":
+                    f3_8()
+                case "9":
+                    f3_8()
+                case "10":
+                    f3_8()
+                case _:
+                    print("Error!\nЗадания не существует")
+        else:
+            print("Неверный ввод")
 
 
 if __name__ == '__main__':
