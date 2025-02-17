@@ -149,7 +149,7 @@ def mul_bits(x, y, bits):
     return x * y
 
 
-def f3_7(x: int, y: int) -> int:
+def f3_7(x: int, y: int) -> int: # mul16
     x0 = x & 0xFF # младшие 8 бит
     x1 = (x >> 8) & 0xFF # старшие
 
@@ -163,24 +163,32 @@ def f3_7(x: int, y: int) -> int:
     z2 = mul_bits(x1, y0, 8) + mul_bits(x0, y1, 8) # погрешность / та штука когда столбиком решаешь я не помню
 
     result = (z1 << 16) + (z2 << 8) + z0 # составление результата
-    #print(z1 << 16)
-    #print(z2 << 8)
-    #print(z0)
     return result
 
 
-def f3_8():
-    # TODO
-    return 0
+def f3_8(x: int, y: int) -> int: # mul16k
+    x0 = x & 0xFF
+    x1 = (x >> 8) & 0xFF
+
+    y0 = y & 0xFF
+    y1 = (y >> 8) & 0xFF
+
+    z0 = x0 * y0
+    z1 = x1 * y1
+    z2 = (x1 + x0) * (y1 + y0) - z1 - z0 # Чёт похоже на 3_3, где было умножение на 15 используя 3 + 2 -
+
+    result = (z1 << 16) + (z2 << 8) + z0
+    return result
 
 
-def f3_9():
+def f3_9(y: int) -> int: # fast_mul_gen
+    # я не понял, чё за 2.1 - 2.3
     # TODO
     return 0
 
 
 def f3_10():
-    # TODO
+    # TODO after 3.9
     return 0
 
 
@@ -230,11 +238,11 @@ def main():
                 case "7":
                     print(f3_7(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "8":
-                    f3_8()
+                    print(f3_8(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "9":
-                    f3_8()
+                    f3_9(1)
                 case "10":
-                    f3_8()
+                    f3_10()
                 case _:
                     print("Error!\nЗадания не существует")
         else:
