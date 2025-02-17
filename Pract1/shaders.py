@@ -69,6 +69,25 @@ def sdf_square(x, y):
     d = square(x - 0.5, y - 0.5, 0.4)
     return d > 0, abs(d) * 3, 0
 
+
+# 5.3 FIXME LINE 83
+
+def union(x, y):
+    return x + y
+
+
+def intersect(x, y):
+    return max(x, y) - min(x, y)
+
+def difference(x, y):
+    return min(x, y) * max(x, y) # где цвет))
+
+def sdf_square_dif(x, y):
+    d = difference(square(x - 0.5, y - 0.5, 0.4), circle(x - 0.5, y - 0.5, 0.3))
+    return d > 0, abs(d) * 3, 0
+
+
+
 def main():
     while 1:
         choice = input("Введите номер задания (от 4 до 5): ")
@@ -79,13 +98,13 @@ def main():
             elif task == "2":
                 mainShader(circleShader)
             elif task == "3":
-                mainShader(circleShader)
+                mainShader(circleShader) # XD
             elif task == "4":
-                mainShader(circleShader)
+                mainShader(circleShader) # XD
             elif task == "5":
-                mainShader(circleShader)
+                mainShader(circleShader) # XD
             elif task == "6":
-                mainShader(circleShader)
+                mainShader(circleShader) # XD
 
         elif choice == "5":
             task = (input("Введите подраздел задания (от 1 до 5): "))
@@ -94,11 +113,11 @@ def main():
             elif task == "2":
                 mainShader(sdf_square)
             elif task == "3":
-                mainShader(sdf_square)
+                mainShader(sdf_square_dif)
             elif task == "4":
-                mainShader(sdf_square)
+                mainShader(sdf_square) # XD
             elif task == "5":
-                mainShader(sdf_square)
+                mainShader(sdf_square) # XD
         else:
             print("Такого варианта нет.\n")
 
