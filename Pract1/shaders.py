@@ -60,22 +60,9 @@ def sdf_circle(x, y):
     return d > 0, abs(d) * 3, 0
 
 
-### 5.2 FIXME
+### 5.2
 def square(x, y, s):
-    half_side = s / 2
-    x1 = x - half_side
-    y1 = y - half_side
-
-    x2 = x + half_side
-    y2 = y - half_side
-
-    x3 = x - half_side
-    y3 = y + half_side
-
-    x4 = x + half_side
-    y4 = y + half_side
-
-    return (x1 * y1) + (x2 * y2) + (x3 * y3) + (x4 * y4)
+    return max(abs(x), abs(y)) - s
 
 
 def sdf_square(x, y):
@@ -91,12 +78,26 @@ def main():
                 mainShader(blackSquareShader)
             elif task == "2":
                 mainShader(circleShader)
+            elif task == "3":
+                mainShader(circleShader)
+            elif task == "4":
+                mainShader(circleShader)
+            elif task == "5":
+                mainShader(circleShader)
+            elif task == "6":
+                mainShader(circleShader)
 
         elif choice == "5":
             task = (input("Введите подраздел задания (от 1 до 5): "))
             if task == "1":
                 mainShader(sdf_circle)
             elif task == "2":
+                mainShader(sdf_square)
+            elif task == "3":
+                mainShader(sdf_square)
+            elif task == "4":
+                mainShader(sdf_square)
+            elif task == "5":
                 mainShader(sdf_square)
         else:
             print("Такого варианта нет.\n")
