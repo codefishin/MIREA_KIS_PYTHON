@@ -26,8 +26,13 @@ def mainShader(shader):
 def blackSquareShader(x, y): # 4.1
     return 0, 0, 0 # rgb
 
-def circleShader(x, y): # 4.2 TODO
-    return x, y, 0
+def circleShader(x, y): # 4.2
+    s = 0.6
+    d = 0.53
+    d2 = 1 - d
+    r2 = ((x - d2) ** 2 + (y - d2) ** 2) * 2 - (s ** 2)
+    r1 = ((x - d) ** 2 + (y - d) ** 2) * 2 - (s ** 2)
+    return -r1 - (r1 * 2), -r2 + (-r2 * 2), 0
 
 
 def pacManShader(x, y): # 4.3 TODO
@@ -70,7 +75,7 @@ def sdf_square(x, y):
     return d > 0, abs(d) * 3, 0
 
 
-# 5.3 FIXME LINE 83
+# 5.3 FIXME func: difference
 
 def union(x, y):
     return x + y
@@ -98,13 +103,13 @@ def main():
             elif task == "2":
                 mainShader(circleShader)
             elif task == "3":
-                mainShader(circleShader) # XD
+                mainShader(pacManShader)
             elif task == "4":
-                mainShader(circleShader) # XD
+                mainShader(noiseShader)
             elif task == "5":
-                mainShader(circleShader) # XD
+                mainShader(valNoiseShader)
             elif task == "6":
-                mainShader(circleShader) # XD
+                mainShader(cloudShader)
 
         elif choice == "5":
             task = (input("Введите подраздел задания (от 1 до 5): "))
@@ -115,9 +120,9 @@ def main():
             elif task == "3":
                 mainShader(sdf_square_dif)
             elif task == "4":
-                mainShader(sdf_square) # XD
+                mainShader(sdf_square) # TODO
             elif task == "5":
-                mainShader(sdf_square) # XD
+                mainShader(sdf_square) # TODO
         else:
             print("Такого варианта нет.\n")
 
