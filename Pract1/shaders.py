@@ -1,8 +1,6 @@
 import sys
 import math
 import tkinter as tk
-from doctest import master
-
 
 def draw(shader, width, height):
     image = bytearray((0, 0, 0) * width * height)
@@ -98,15 +96,15 @@ def union(x, y):
     return x + y
 
 
-def intersect(x, y):
-    return max(x, y) - min(x, y)
+def intersect(x, y):  # TODO
+    return 0
 
 def difference(x, y):
-    return min(x, y) * max(x, y) # где цвет))
+    return x * y # где цвет))
 
 def sdf_square_dif(x, y):
     d = difference(square(x - 0.5, y - 0.5, 0.4), circle(x - 0.5, y - 0.5, 0.3))
-    return d > 0, abs(d) * 3, 0
+    return d > 0, abs(d), 0
 
 
 
