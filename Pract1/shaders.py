@@ -1,6 +1,7 @@
 import sys
 import math
 import tkinter as tk
+from doctest import master
 
 
 def draw(shader, width, height):
@@ -35,8 +36,24 @@ def circleShader(x, y): # 4.2
     return -r1 - (r1 * 2), -r2 + (-r2 * 2), 0
 
 
-def pacManShader(x, y): # 4.3 TODO
-    return x, y, 0
+class pacManShader: # 4.3
+    def __init__(self, mast):
+        self.master = mast
+        self.canvas = tk.Canvas(mast, width=400, height=400, bg="black")
+        self.canvas.pack()
+        self.draw_pacman(200, 200, 120, 45)
+
+    def draw_pacman(self, x, y, radius, angle):
+        self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill="yellow", outline="black")
+        self.canvas.create_oval(240, 110, 200, 150, fill="black")
+        # Вычисляем координаты для треугольника
+        points = [
+            (x, y),  # центр
+            (x + radius * math.cos(math.radians(angle)) + x * 0.2, y - radius * math.sin(math.radians(angle))),  # точка на границе
+            (x + radius * math.cos(math.radians(-angle)) + x * 0.2, y - radius * math.sin(math.radians(-angle))),  # другая точка на границе
+        ]
+        # Рисуем треугольник Pac-Man
+        self.canvas.create_polygon(points, fill="black")
 
 
 def noiseShader(x, y): # 4.4 TODO
@@ -103,7 +120,9 @@ def main():
             elif task == "2":
                 mainShader(circleShader)
             elif task == "3":
-                mainShader(pacManShader)
+                root = tk.Tk()
+                pacManShader(root) # я не буду это делать через mainShader
+                root.mainloop()
             elif task == "4":
                 mainShader(noiseShader)
             elif task == "5":
