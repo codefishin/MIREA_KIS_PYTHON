@@ -120,34 +120,26 @@ def f3_4(x: int, y: int) -> int:
 
 
 def fast_mul(x: int, y: int) -> int: # 3_5
-    result = 0
-    while x:
-        if x % 2 != 0:
-            result = y + result
-        x = x // 2
-        y = y * 2
+    result = x
+    while y > 0:
+        if y & 1: # Если число нечётное
+            result <<= y
+
+        x <<= 1 # Умножить x на 1
+        y >>= 1 # Делить y на 1
+
     return result
 
 
-def fast_pow(x: int, y: int) -> int:
-    result = 0
+def fast_pow(x: int, y: int) -> int: # 3_6
+    result = 1
+    while y > 0:
+        if y & 1: # Если число нечётное
+            result *= x
 
-    if y == 0: result = 1
-    if y == 1: result = x
+        x *= x
+        y >>= 1 # Делить y на 1
 
-    y = y - 1
-    z = x
-    x1 = x
-    while y:
-        result = 0
-        while x:
-            if x % 2 != 0:
-                    result = x1 + result
-            x = x // 2
-            x1 = x1 * 2
-        x = result
-        x1 = z
-        y = y - 1
     return result
 
 
@@ -189,26 +181,87 @@ def f3_8(x: int, y: int) -> int: # mul16k
     return result
 
 
-def f3_9(y: int) -> int: # fast_mul_gen
-    # я не понял, чё за 2.1 - 2.3
-    # TODO
-    return 0
+def fast_mul_gen(var: int):
 
 
-def f3_10():
-    # TODO after 3.9
-    return 0
+    def fast_mul_wrap(x: int, y: int) -> int:
+        print("-" * 30)
+        result = 0
+        sums = 0
+        print('f(x) =', result, "\ny =", y)
+        sums += 1
+        while x:
+            if x % 2 != 0:
+                print('f(x) =', result, '+', y)
+                result = y + result
+                sums += 1
+            print('y = y +', y)
+            sums += 1
+            x = x // 2  # из fast_mul
+            y = y * 2  # из fast_mul
+        print('f(x) =', result, "\nSummaries made:", sums)
+        return result
+
+
+    def task2_1(x: int) -> int:
+        return fast_mul_wrap(x, 12)
+
+
+    def task2_2(x: int) -> int:
+        return fast_mul_wrap(x, 16)
+
+
+    def task2_3(x: int) -> int:
+        return fast_mul_wrap(x, 15)
+
+
+    print(task2_1(var))
+    print(task2_2(var))
+    print(task2_3(var))
+
+
+def fast_pow_gen(var: int):
+    def fast_pow_wrap(x: int, y: int) -> int:
+        print("-" * 30)
+        result = 1
+        oper = 0
+        print('f(x) =', result, "\ny =", y)
+        oper += 1
+        while y > 0:
+            if y & 1:
+                print('f(x) =', result, '+', y)
+                result *= x
+                oper += 1
+            print('y = y +', y)
+            oper += 1
+            x *= x
+            y >>= 1  # fast_gen
+        print('f(x) =', result, "\nOperations made:", oper)
+        return result
+
+    def task2_1(x: int) -> int:
+        return fast_pow_wrap(x, 2)
+
+    def task2_2(x: int) -> int:
+        return fast_pow_wrap(x, 4)
+
+    def task2_3(x: int) -> int:
+        return fast_pow_wrap(x, 8)
+
+    print(task2_1(var))
+    print(task2_2(var))
+    print(task2_3(var))
 
 
 def main():
     while 1:
-        var_type = input("Введите главу задания (от 1 до 3)\n0 завершит программу")
+        var_type = input("\n" + "-" * 15 + "Введите главу задания (от 1 до 3)"  + "-" * 15 + "\n0 завершит программу\n")
         if var_type == "0":
             break
         elif var_type == "2":
             f2()
         elif var_type == "1":
-            var_task = input("Введите задание (от 1 до 8)")  # 8
+            var_task = input("Введите задание (от 1 до 8) ")  # 8
             match var_task:  # ОСТОРОЖНО, РАБОТАЕТ ТОЛЬКО ОТ PYTHON 3.11 И ВЫШЕ
                 case "1":
                     f1_1()
@@ -227,30 +280,30 @@ def main():
                 case "8":
                     f1_8()
                 case _:
-                    print("Error!\nЗадания не существует")
+                    print("Error!\nЗадания не существует\n")
         elif var_type == "3":
-            var_task = input("Введите задание (от 1 до 10)")  # 10
+            var_task = input("Введите задание (от 1 до 10) ")  # 10
             match var_task:  # ОСТОРОЖНО, РАБОТАЕТ ТОЛЬКО ОТ PYTHON 3.11 И ВЫШЕ
                 case "1":
-                    print(f3_1(float(input("Введите x (float)"))))
+                    print(f3_1(float(input("Введите x (float) "))))
                 case "2":
-                    print(f3_2(float(input("Введите x (float)"))))
+                    print(f3_2(float(input("Введите x (float) "))))
                 case "3":
-                    print(f3_3(float(input("Введите x (float)"))))
+                    print(f3_3(float(input("Введите x (float) "))))
                 case "4":
-                    print(f3_4(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(f3_4(int(input("Введите x (int) ")), int(input("Введите y (int) "))))
                 case "5":
-                    print(fast_mul(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(fast_mul(int(input("Введите x (int) ")), int(input("Введите y (int) "))))
                 case "6":
-                    print(fast_pow(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(fast_pow(int(input("Введите x (int) ")), int(input("Введите y (int) "))))
                 case "7":
-                    print(f3_7(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(f3_7(int(input("Введите x (int) ")), int(input("Введите y (int) "))))
                 case "8":
-                    print(f3_8(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(f3_8(int(input("Введите x (int) ")), int(input("Введите y (int) "))))
                 case "9":
-                    f3_9(1)
+                    fast_mul_gen(int(input("Введите x (int) ")))
                 case "10":
-                    f3_10()
+                    fast_pow_gen(int(input("Введите x (int) ")))
                 case _:
                     print("Error!\nЗадания не существует")
         else:
