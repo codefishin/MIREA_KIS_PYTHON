@@ -1,6 +1,7 @@
 import sys
 import math
 import tkinter as tk
+import random
 
 def draw(shader, width, height):
     image = bytearray((0, 0, 0) * width * height)
@@ -54,11 +55,7 @@ class PacManShader: # 4.3
         self.canvas.create_polygon(points, fill="black")
 
 
-def pseudoRandomNoise(x, y):
-    """
-    Генерирует псевдослучайное значение шума для координат (x, y).
-    Возвращает float в диапазоне [0, 1].
-    """
+def pseudoRandom(x, y):
     # Простая хеш-функция на основе координат
     n = x * 73856093 + y * 19349663
     n = n ^ (n >> 13)
@@ -69,23 +66,62 @@ def pseudoRandomNoise(x, y):
     return (n % 1000000) / 1000000.0
 
 
-def noiseShader(master): # 4.4 TODO
+def noiseShader(master): # 4.4
     w = 512
     h = 512
     canvas = tk.Canvas(master, width=w, height=h)
     canvas.pack()
     for y in range(w):
         for x in range(h):
-            noise_value = pseudoRandomNoise(x, y)
+            noise_value = pseudoRandom(x, y)
             color_value = int(noise_value * 255)
             color = f'#{color_value:02x}{color_value:02x}{color_value:02x}'
             canvas.create_line(x, y, x + 1, y, fill=color)
 
     master.update()
 
+# <------------- val noise ----------------->
 
-def valNoiseShader(x, y): # 4.5 TODO
-    return x, y, 0
+def interpolate(a, b, t): return a + (b - a) * t
+
+
+def valNoiseShader(master, scale=16):
+    w = 512 # width
+    h = 512 # height
+    # я просто сдался уже использовать mainShader для этого всего
+    canvas = tk.Canvas(master, width=w, height=h)
+    canvas.pack()
+
+    grid_width = w // scale + 1
+    grid_height = h // scale + 1
+
+    grid = [[random.randint(0,255) for _ in range(grid_width)]
+            for _ in range(grid_height)] # сетка
+    # эмммм в задании 4.4 сказано не использовать random :nerd:
+    # зато в задании 4.5 не сказано не использовать random
+
+    for y in range(h):
+        for x in range(w):
+            grid_x = x // scale # как бы сетка для интер чё-то там слово сложное оно должно
+            # быть МЕНЬШЕ общего размера и как бы у нас есть настройка чтобы размер уменьшался (параметр scale)
+            grid_y = y // scale
+
+            local_x = (x % scale) / scale # для интер чёто там ну слово сложное
+            local_y = (y % scale) / scale
+
+            top_left = grid[grid_y][grid_x] # создание углов для вывода пикселя
+            top_right = grid[grid_y][grid_x + 1]
+            bottom_left = grid[grid_y + 1][grid_x]
+            bottom_right = grid[grid_y + 1][grid_x + 1]
+
+            # bilinear штука
+            top = interpolate(top_left, top_right, local_x)
+            bottom = interpolate(bottom_left, bottom_right, local_x)
+            value = interpolate(top, bottom, local_y)
+            # копирка из noise
+            color_value = int(value)
+            color = f'#{color_value:02x}{color_value:02x}{color_value:02x}'
+            canvas.create_line(x, y, x + 1, y, fill=color)
 
 
 def cloudShader(x, y): # 4.6 TODO
@@ -143,7 +179,10 @@ def main():
                 noiseShader(root)
                 root.mainloop()
             elif task == "5":
-                mainShader(valNoiseShader)
+                root = tk.Tk()
+                root.title("qr-code looking aah")
+                valNoiseShader(root, scale=16) # scale можно не вводить
+                root.mainloop()
             elif task == "6":
                 mainShader(cloudShader)
 
