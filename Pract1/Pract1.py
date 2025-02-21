@@ -119,27 +119,35 @@ def f3_4(x: int, y: int) -> int:
     return x
 
 
-def f3_5(x: int, y: int) -> int: #fast_mul
-    result = x
-    while y > 0:
-        if y & 1: # Если число нечётное
-            result <<= y
-
-        x <<= 1 # Умножить x на 1
-        y >>= 1 # Делить y на 1
-
+def fast_mul(x: int, y: int) -> int: # 3_5
+    result = 0
+    while x:
+        if x % 2 != 0:
+            result = y + result
+        x = x // 2
+        y = y * 2
     return result
 
 
-def f3_6(x: int, y: int) -> int: #fast_pow
-    result = 1
-    while y > 0:
-        if y & 1: # Если число нечётное
-            result *= x
+def fast_pow(x: int, y: int) -> int:
+    result = 0
 
-        x *= x
-        y >>= 1 # Делить y на 1
+    if y == 0: result = 1
+    if y == 1: result = x
 
+    y = y - 1
+    z = x
+    x1 = x
+    while y:
+        result = 0
+        while x:
+            if x % 2 != 0:
+                    result = x1 + result
+            x = x // 2
+            x1 = x1 * 2
+        x = result
+        x1 = z
+        y = y - 1
     return result
 
 
@@ -232,9 +240,9 @@ def main():
                 case "4":
                     print(f3_4(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "5":
-                    print(f3_5(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(fast_mul(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "6":
-                    print(f3_6(int(input("Введите x (int)")), int(input("Введите y (int)"))))
+                    print(fast_pow(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "7":
                     print(f3_7(int(input("Введите x (int)")), int(input("Введите y (int)"))))
                 case "8":
