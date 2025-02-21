@@ -34,7 +34,7 @@ def circleShader(x, y): # 4.2
     return -r1 - (r1 * 2), -r2 + (-r2 * 2), 0
 
 
-class pacManShader: # 4.3
+class PacManShader: # 4.3
     def __init__(self, mast):
         self.master = mast
         self.canvas = tk.Canvas(mast, width=400, height=400, bg="black")
@@ -54,8 +54,34 @@ class pacManShader: # 4.3
         self.canvas.create_polygon(points, fill="black")
 
 
-def noiseShader(x, y): # 4.4 TODO
-    return x, y, 0
+def pseudoRandomNoise(x, y):
+    """
+    Генерирует псевдослучайное значение шума для координат (x, y).
+    Возвращает float в диапазоне [0, 1].
+    """
+    # Простая хеш-функция на основе координат
+    n = x * 73856093 + y * 19349663
+    n = n ^ (n >> 13)
+    n = n * 83492791
+    n = n & 0xFFFFFFFF  # Ограничиваем 32 битами
+
+    # Преобразуем в значение от 0 до 1
+    return (n % 1000000) / 1000000.0
+
+
+def noiseShader(master): # 4.4 TODO
+    w = 512
+    h = 512
+    canvas = tk.Canvas(master, width=w, height=h)
+    canvas.pack()
+    for y in range(w):
+        for x in range(h):
+            noise_value = pseudoRandomNoise(x, y)
+            color_value = int(noise_value * 255)
+            color = f'#{color_value:02x}{color_value:02x}{color_value:02x}'
+            canvas.create_line(x, y, x + 1, y, fill=color)
+
+    master.update()
 
 
 def valNoiseShader(x, y): # 4.5 TODO
@@ -73,8 +99,6 @@ def cloudShader(x, y): # 4.6 TODO
 ### 5.1
 def circle(x, y, r):
     return x ** 2 + y ** 2 - r ** 2
-
-
 def sdf_circle(x, y):
     d = circle(x - 0.5, y - 0.5, 0.45)
     return d > 0, abs(d) * 3, 0
@@ -83,25 +107,18 @@ def sdf_circle(x, y):
 ### 5.2
 def square(x, y, s):
     return max(abs(x), abs(y)) - s
-
-
 def sdf_square(x, y):
     d = square(x - 0.5, y - 0.5, 0.4)
     return d > 0, abs(d) * 3, 0
 
 
 # 5.3 FIXME func: difference
-
 def union(x, y):
     return x + y
-
-
 def intersect(x, y):  # TODO
     return 0
-
 def difference(x, y):
     return x * y # где цвет))
-
 def sdf_square_dif(x, y):
     d = difference(square(x - 0.5, y - 0.5, 0.4), circle(x - 0.5, y - 0.5, 0.3))
     return d > 0, abs(d), 0
@@ -117,12 +134,14 @@ def main():
                 mainShader(blackSquareShader)
             elif task == "2":
                 mainShader(circleShader)
-            elif task == "3":
+            elif task == "3": # я не буду это делать через mainShader
                 root = tk.Tk()
-                pacManShader(root) # я не буду это делать через mainShader
+                PacManShader(root)
                 root.mainloop()
-            elif task == "4":
-                mainShader(noiseShader)
+            elif task == "4": # и это тоже, дальше подозреваю тоже
+                root = tk.Tk()
+                noiseShader(root)
+                root.mainloop()
             elif task == "5":
                 mainShader(valNoiseShader)
             elif task == "6":
