@@ -1,4 +1,7 @@
 # Скорее всего вам надо протестить PEP8 ошибки.
+
+![pibble-pibble-dog](https://github.com/user-attachments/assets/87e94a1e-24c4-4b93-a4c1-ca8b8674c18f)
+
 Для этого установите пакет pycodestyle
 ### Для Windows
 ```
