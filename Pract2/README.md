@@ -15,4 +15,5 @@ cd <PATH_HERE>
 pycodestyle --first <.PY_FILE_NAME>
 ```
 Примерно так...
+
 ![image](https://github.com/user-attachments/assets/fe38d68a-3bc4-4b24-af99-386037ea1aad)
