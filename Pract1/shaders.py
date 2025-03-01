@@ -130,11 +130,11 @@ def cloudShader(x, y): # 4.6 TODO
 
 # 4.7 делать не буду
 
-### ниже задание 5 ###
-
-### 5.1
+# 5.1
 def circle(x, y, r):
     return x ** 2 + y ** 2 - r ** 2
+
+
 def sdf_circle(x, y):
     d = circle(x - 0.5, y - 0.5, 0.45)
     return d > 0, abs(d) * 3, 0
@@ -143,14 +143,17 @@ def sdf_circle(x, y):
 ### 5.2
 def square(x, y, s):
     return max(abs(x), abs(y)) - s
+
+
 def sdf_square(x, y):
     d = square(x - 0.5, y - 0.5, 0.4)
     return d > 0, abs(d) * 3, 0
 
 
 # 5.3
-def union(x, y):
-    return min(x, y)
+def union(*obj):
+    objs = list(obj)
+    return min(objs)
 
 
 def intersect(x, y):
@@ -166,6 +169,13 @@ def sdf_square_dif(x, y):
                    circle(x - 0.5, y - 0.5, 0.3))
     return d > 0, abs(d) * 3, 0
 
+# 5.4
+
+def sdf_freddy_fazbear(x, y):  # пойдёт
+    d = union(circle(x - 0.25, y - 0.25, 0.15),
+              circle(x - 0.75, y - 0.25, 0.15),
+              circle(x - 0.5, y - 0.5, 0.35))
+    return d > 0, abs(d) * 3, 0
 
 
 def main():
@@ -202,7 +212,7 @@ def main():
             elif task == "3":
                 mainShader(sdf_square_dif)
             elif task == "4":
-                mainShader(sdf_square) # TODO
+                mainShader(sdf_freddy_fazbear) # TODO
             elif task == "5":
                 mainShader(sdf_square) # TODO
         else:
