@@ -3,6 +3,7 @@ import math
 import tkinter as tk
 import random
 
+
 def draw(shader, width, height):
     image = bytearray((0, 0, 0) * width * height)
     for y in range(height):
@@ -23,10 +24,11 @@ def mainShader(shader):
     tk.mainloop()
 
 
-def blackSquareShader(x, y): # 4.1
-    return 0, 0, 0 # rgb
+def blackSquareShader(x, y):  # 4.1
+    return 0, 0, 0  # rgb
 
-def circleShader(x, y): # 4.2
+
+def circleShader(x, y):  # 4.2
     s = 0.6
     d = 0.53
     d2 = 1 - d
@@ -35,7 +37,7 @@ def circleShader(x, y): # 4.2
     return -r1 - (r1 * 2), -r2 + (-r2 * 2), 0
 
 
-class PacManShader: # 4.3
+class PacManShader:  # 4.3
     def __init__(self, mast):
         self.master = mast
         self.canvas = tk.Canvas(mast, width=400, height=400, bg="black")
@@ -43,15 +45,19 @@ class PacManShader: # 4.3
         self.draw_pacman(200, 200, 120, 45)
 
     def draw_pacman(self, x, y, radius, angle):
-        self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill="yellow", outline="black")
+        self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius,
+                                fill="yellow", outline="black")
         self.canvas.create_oval(240, 110, 200, 150, fill="black")
         # Вычисляем координаты для треугольника
         points = [
             (x, y),  # центр
-            (x + radius * math.cos(math.radians(angle)) + x * 0.2, y - radius * math.sin(math.radians(angle))),  # точка на границе
-            (x + radius * math.cos(math.radians(-angle)) + x * 0.2, y - radius * math.sin(math.radians(-angle))),  # другая точка на границе
+            (x + radius * math.cos(math.radians(angle)) + x * 0.2,
+             y - radius * math.sin(math.radians(angle))),
+            # точка на границе
+            (x + radius * math.cos(math.radians(-angle)) + x * 0.2,
+             y - radius * math.sin(math.radians(-angle))),
+            # другая точка на границе
         ]
-        # Рисуем треугольник Pac-Man
         self.canvas.create_polygon(points, fill="black")
 
 
@@ -66,7 +72,7 @@ def pseudoRandom(x, y):
     return (n % 1000000) / 1000000.0
 
 
-def noiseShader(master): # 4.4
+def noiseShader(master):  # 4.4
     w = 512
     h = 512
     canvas = tk.Canvas(master, width=w, height=h)
@@ -82,12 +88,14 @@ def noiseShader(master): # 4.4
 
 # <------------- val noise ----------------->
 
-def interpolate(a, b, t): return a + (b - a) * t
+
+def interpolate(a, b, t):
+    return a + (b - a) * t
 
 
 def valNoiseShader(master, scale=16):
-    w = 512 # width
-    h = 512 # height
+    w = 512  # width
+    h = 512  # height
     # я просто сдался уже использовать mainShader для этого всего
     canvas = tk.Canvas(master, width=w, height=h)
     canvas.pack()
@@ -95,21 +103,25 @@ def valNoiseShader(master, scale=16):
     grid_width = w // scale + 1
     grid_height = h // scale + 1
 
-    grid = [[random.randint(0,255) for _ in range(grid_width)]
-            for _ in range(grid_height)] # сетка
+    grid = [[random.randint(0, 255) for _ in range(grid_width)]
+            for _ in range(grid_height)]  # сетка
     # эмммм в задании 4.4 сказано не использовать random :nerd:
     # зато в задании 4.5 не сказано не использовать random
 
     for y in range(h):
         for x in range(w):
-            grid_x = x // scale # как бы сетка для интер чё-то там слово сложное оно должно
-            # быть МЕНЬШЕ общего размера и как бы у нас есть настройка чтобы размер уменьшался (параметр scale)
+            grid_x = x // scale
+            # как бы сетка для интер чё-то там слово сложное оно должно
+            # быть МЕНЬШЕ общего размера и как бы у нас есть
+            # настройка чтобы размер уменьшался (параметр scale)
             grid_y = y // scale
 
-            local_x = (x % scale) / scale # для интер чёто там ну слово сложное
+            local_x = (x % scale) / scale
+            # для интер чёто там ну слово сложное
             local_y = (y % scale) / scale
 
-            top_left = grid[grid_y][grid_x] # создание углов для вывода пикселя
+            top_left = grid[grid_y][grid_x]
+            # создание углов для вывода пикселя
             top_right = grid[grid_y][grid_x + 1]
             bottom_left = grid[grid_y + 1][grid_x]
             bottom_right = grid[grid_y + 1][grid_x + 1]
@@ -124,7 +136,7 @@ def valNoiseShader(master, scale=16):
             canvas.create_line(x, y, x + 1, y, fill=color)
 
 
-def cloudShader(x, y): # 4.6 TODO
+def cloudShader(x, y):  # 4.6 TODO
     return x, y, 0
 
 
@@ -140,7 +152,7 @@ def sdf_circle(x, y):
     return d > 0, abs(d) * 3, 0
 
 
-### 5.2
+# 5.2
 def square(x, y, s):
     return max(abs(x), abs(y)) - s
 
@@ -166,15 +178,35 @@ def difference(x, y):
 
 def sdf_square_dif(x, y):
     d = intersect(square(x - 0.5, y - 0.5, 0.4),
-                   circle(x - 0.5, y - 0.5, 0.3))
+                  circle(x - 0.5, y - 0.5, 0.3))
     return d > 0, abs(d) * 3, 0
 
+
 # 5.4
+
 
 def sdf_freddy_fazbear(x, y):  # пойдёт
     d = union(circle(x - 0.25, y - 0.25, 0.15),
               circle(x - 0.75, y - 0.25, 0.15),
               circle(x - 0.5, y - 0.5, 0.35))
+    return d > 0, abs(d) * 3, 0
+
+
+# 5.5
+
+def square_sizable(x, y, size_x, size_y):
+    dx = abs(x) - size_x
+    dy = abs(y) - size_y
+    outside_dist = (max(dx, 0) ** 2 + max(dy, 0) ** 2) ** 0.5
+    inside_dist = min(max(dx, dy), 0)
+    return outside_dist + inside_dist
+
+
+def sdf_p(x, y):  # похоже на правду
+    rect = square_sizable(x - 0.3, y - 0.5, 0.1, 0.35)
+    d = union(rect,
+              difference(circle(x - .5, y - .4, 0.25),
+                         circle(x - .5, y - .4, 0.1)))
     return d > 0, abs(d) * 3, 0
 
 
@@ -187,18 +219,18 @@ def main():
                 mainShader(blackSquareShader)
             elif task == "2":
                 mainShader(circleShader)
-            elif task == "3": # я не буду это делать через mainShader
+            elif task == "3":  # я не буду это делать через mainShader
                 root = tk.Tk()
                 PacManShader(root)
                 root.mainloop()
-            elif task == "4": # и это тоже, дальше подозреваю тоже
+            elif task == "4":  # и это тоже, дальше подозреваю тоже
                 root = tk.Tk()
                 noiseShader(root)
                 root.mainloop()
             elif task == "5":
                 root = tk.Tk()
                 root.title("qr-code looking aah")
-                valNoiseShader(root, scale=16) # scale можно не вводить
+                valNoiseShader(root, scale=16)  # scale можно не вводить
                 root.mainloop()
             elif task == "6":
                 mainShader(cloudShader)
@@ -212,9 +244,9 @@ def main():
             elif task == "3":
                 mainShader(sdf_square_dif)
             elif task == "4":
-                mainShader(sdf_freddy_fazbear) # TODO
+                mainShader(sdf_freddy_fazbear)
             elif task == "5":
-                mainShader(sdf_square) # TODO
+                mainShader(sdf_p)
         else:
             print("Такого варианта нет.\n")
 
