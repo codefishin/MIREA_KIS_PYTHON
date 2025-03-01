@@ -148,16 +148,23 @@ def sdf_square(x, y):
     return d > 0, abs(d) * 3, 0
 
 
-# 5.3 FIXME func: difference
+# 5.3
 def union(x, y):
-    return x + y
-def intersect(x, y):  # TODO
-    return 0
+    return min(x, y)
+
+
+def intersect(x, y):
+    return max(x, y)
+
+
 def difference(x, y):
-    return x * y # где цвет))
+    return max(x, -y)
+
+
 def sdf_square_dif(x, y):
-    d = difference(square(x - 0.5, y - 0.5, 0.4), circle(x - 0.5, y - 0.5, 0.3))
-    return d > 0, abs(d), 0
+    d = intersect(square(x - 0.5, y - 0.5, 0.4),
+                   circle(x - 0.5, y - 0.5, 0.3))
+    return d > 0, abs(d) * 3, 0
 
 
 
