@@ -1,5 +1,5 @@
 def ham_dist(num1: int, num2: int) -> str:
-    return str(len(str(bin(num1 ^ num2))) - 2)
+    return str(len(bin(num1 ^ num2)) - 2)
 
 
 def main():
