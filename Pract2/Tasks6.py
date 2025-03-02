@@ -21,10 +21,29 @@ _dict = {"1": ["Коллеги,", "В то же время,", "Однако,", "
                "внезапных открытий."],}
 
 
-def text_gen_from_dict(*, sep=' '):
+def text_gen_from_dict(length=0, indent_len=0, *, sep=' ', end='\n'):
+    """
+    Функция генерирует текст из словаря _dict
+    Первый параметр указывает количество предложений в абзаце.
+    Второй параметр указывает количество абзацев.
+    Третий параметр скрыт, является пробелом.
+    Четвёртый параметр скрыт, является переносом строки.
+    :param length:
+    :param indent_len:
+    :param sep:
+    :param end:
+    :return:
+    """
+    if length < 0 or indent_len < 0:
+        raise Exception("Нельзя сгенерировать сообщение при параметре ниже 0 / "
+                        "Can't generate a message with a parameter less than 0")
+
     generated_text = ''
-    for value in _dict.values():
-        generated_text += value[random.randint(0, 7)] + sep
+    for _ in range(0, indent_len + 1):
+        for __ in range(0, length + 1):
+            for value in _dict.values():
+                generated_text += value[random.randint(0, 7)] + sep
+        generated_text += end
     return generated_text
 
 
@@ -32,8 +51,8 @@ def text_gen_from_dict(*, sep=' '):
 
 
 def main():
-    print(text_gen_from_dict())
-    
-    
+    print(text_gen_from_dict(-1, 0))
+
+
 if __name__ == "__main__":
     main()
