@@ -1,3 +1,15 @@
+# СТАТУС ВЫПОЛНЕНИЯ (НЕ УЧИТЫВАЮТСЯ ЗАДАНИЯ УРОВНЯ УЧЁНЫЙ+):
+```
+BLOCK 1: DONE
+BLOCK 2: DONE
+BLOCK 3: DONE
+BLOCK 4: DONE
+BLOCK 5, TODO: 2, 4, 5, 6
+BLOCK 6, TODO: 3, 4, 5
+BLOCK 7, TODO: ALL
+BLOCK 8, TODO: ALL
+```
+
 # Скорее всего вам надо протестить PEP8 ошибки.
 
 ![pibble-pibble-dog](https://github.com/user-attachments/assets/87e94a1e-24c4-4b93-a4c1-ca8b8674c18f)
