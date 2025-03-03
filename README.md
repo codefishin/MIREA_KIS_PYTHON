@@ -6,6 +6,12 @@
 ```
 https://github.com/true-grue/kispython
 ```
+# Строка, которая позволяет выводить число с приблизительностью, как на kispython.ru
+```
+from decimal import Decimal
+
+print(f"{Decimal(FUNCTION()):.2E}")  # Вместо FUNCTION() вводите что хотите
+```
 # Основы PEP8, за которыми стоит следить
 ### Ссылка на гайд по PEP8
 ```
