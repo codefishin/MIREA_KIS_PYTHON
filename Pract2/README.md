@@ -7,7 +7,7 @@ BLOCK 4: DONE
 BLOCK 5, TODO: 2, 4, 5, 6
 BLOCK 6, TODO: 3, 4, 5
 BLOCK 7, TODO: 4, 5 [4,5 без понятия буду ли выполнять]
-BLOCK 8, TODO: ALL
+BLOCK 8, TODO: 2, 3
 ```
 
 # Скорее всего вам надо протестить PEP8 ошибки.
