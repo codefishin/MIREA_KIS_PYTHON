@@ -7,7 +7,7 @@ def convert_quotes(markdown_text):
     m = 0
     buf = ''
     res = ''
-    alphabet = ['"', '“', '”']
+    # alphabet = ['"', '“', '”']  FIXME
     change = ['«', '»']  # должно быть из 2 символов.
     if len(change) != 2:
         raise Exception("Check change length on line 11")
@@ -25,11 +25,11 @@ def convert_quotes(markdown_text):
                 buf += '\b'
                 res += _
                 continue
-            if _ in alphabet and m == 0:
+            if _ == '"' and m == 0:
                 m += 1
                 res += change[0]
                 continue
-            elif _ in alphabet:
+            elif _ == '"':
                 m = 0
                 res += change[1]
                 continue
