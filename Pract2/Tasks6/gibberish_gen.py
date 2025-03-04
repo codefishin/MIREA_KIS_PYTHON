@@ -1,6 +1,5 @@
 import random
 
-# 1 TODO: _dict должен забирать данные из некой таблицы.
 
 _dict = {"1": ["Коллеги,", "В то же время,", "Однако,", "Тем не менее,",
                "Следовательно,", "Соответственно,", "Вместе с тем,", "С другой стороны,"],
@@ -45,9 +44,6 @@ def text_gen_from_dict(length=0, indent_len=0, *, sep=' ', end='\n'):
                 generated_text += value[random.randint(0, 7)] + sep
         generated_text += end
     return generated_text
-
-
-# TODO: DRIVER
 
 
 def main():
