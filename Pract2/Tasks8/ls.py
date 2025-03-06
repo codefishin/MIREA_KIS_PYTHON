@@ -14,7 +14,8 @@ def listDirectory(path='.', all_files=False, long_format=False):
             stats = os.stat(f_path)
             permissions = oct(stats.st_mode)[-3:]
             size = stats.st_size
-            modified_time = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d %H:%M')
+            modified_time = (datetime.fromtimestamp(stats.st_mtime)
+                             .strftime('%Y-%m-%d %H:%M'))
             print(f"{permissions} {size} {modified_time} {f}")
     else:  # -a
         print("\n".join(files))
@@ -22,9 +23,16 @@ def listDirectory(path='.', all_files=False, long_format=False):
 
 def main():
     parser = argparse.ArgumentParser(description='List directory contents.')
-    parser.add_argument('-p', nargs='?', default='.', help='Directory path to list')  # флаг для пути
-    parser.add_argument('-a', action='store_true', help='Include hidden files')  # вывод всего
-    parser.add_argument('-l', action='store_true', help='Use long listing format')  # swag
+    parser.add_argument('-p',
+                        nargs='?',
+                        default='.',
+                        help='Directory path to list')  # флаг для пути
+    parser.add_argument('-a',
+                        action='store_true',
+                        help='Include hidden files')  # вывод всего
+    parser.add_argument('-l',
+                        action='store_true',
+                        help='Use long listing format')  # swag
 
     args = parser.parse_args()
 
