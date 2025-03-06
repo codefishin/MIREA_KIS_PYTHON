@@ -12,7 +12,7 @@ def convert_quotes(markdown_text):
         raise Exception("Check change length on line 10")
 
     for _ in parts:
-        for i in _:  # XDXDXDXD зато своё
+        for i in _:  # зато своё
             if i == '`':
                 buf += i
                 res += i
@@ -38,9 +38,12 @@ def convert_quotes(markdown_text):
 
 
 def main():
-    # Все print переписаны на то, чтобы заполнять файл
-    # Стандартный ввод: python gen_markdown.py FILE1.md
-    # Ввод в файл: python gen_markdown.py FILE1.md > FILE2.md
+    """
+    Все print переписаны на то, чтобы заполнять файл
+    Стандартный ввод: python gen_markdown.py FILE1.md
+    Ввод в файл: python gen_markdown.py FILE1.md > FILE2.md
+    :return: 
+    """
     if len(sys.argv) > 1:
         filename = sys.argv[1]
         with open(filename, 'r', encoding='ISO-8859-1') as file:
