@@ -1,6 +1,7 @@
 import os
 import argparse
 
+
 def generate_graphviz(path='.', parent=None, write_to_file=False):
     graph = ""
     if parent is None:
@@ -27,9 +28,15 @@ def generate_graphviz(path='.', parent=None, write_to_file=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='List directory contents.')
-    parser.add_argument('path', nargs='?', default='.', help='Directory path to list')  # флаг для пути
-    parser.add_argument('-f', action='store_true', help='Write to file in PATH')  # вывод в файл
+    parser = argparse.ArgumentParser(
+        description='List directory contents.')
+    parser.add_argument('path',
+                        nargs='?',
+                        default='.',
+                        help='Directory path to list')  # флаг для пути
+    parser.add_argument('-f',
+                        action='store_true',
+                        help='Write to file in PATH')  # вывод в файл
 
     args = parser.parse_args()
     print(generate_graphviz(args.path, None, args.f))
