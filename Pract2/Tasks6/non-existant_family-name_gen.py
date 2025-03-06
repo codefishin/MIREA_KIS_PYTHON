@@ -23,7 +23,8 @@ def generate_full_name():
     names = read_data('names.txt')
     surname = names[random.randint(0, len(names) - 1)][0]
     surname += '.'
-    return names[random.randint(0, len(names) - 1)] + ' ' + surname + ' ' + family_name
+    return (names[random.randint(0, len(names) - 1)]
+            + ' ' + surname + ' ' + family_name)
 
 
 def main():
