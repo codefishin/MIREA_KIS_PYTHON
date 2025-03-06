@@ -27,7 +27,7 @@ cd <PATH_HERE>
 ```
 После этого пишите:
 ```
-pycodestyle --first <.PY_FILE_NAME>
+pycodestyle <.PY_FILE_NAME>
 ```
 Примерно так...
 
