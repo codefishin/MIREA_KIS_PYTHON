@@ -11,28 +11,28 @@ def convert_quotes(markdown_text):
     if len(change) != 2:
         raise Exception("Check change length on line 10")
 
-    for i in parts:
-        for _ in i:  # XDXDXDXD зато своё
-            if _ == '`':
-                buf += _
-                res += _
+    for _ in parts:
+        for i in _:  # XDXDXDXD зато своё
+            if i == '`':
+                buf += i
+                res += i
                 continue
             if buf == '```':
-                res += _
+                res += i
                 continue
-            if buf == '```' and _ == '`':
+            if buf == '```' and i == '`':
                 buf += '\b'
-                res += _
+                res += i
                 continue
-            if _ == '"' and m == 0:
+            if i == '"' and m == 0:
                 m += 1
                 res += change[0]
                 continue
-            elif _ == '"':
+            elif i == '"':
                 m = 0
                 res += change[1]
                 continue
-            res += _
+            res += i
 
     return ''.join(res)
 
