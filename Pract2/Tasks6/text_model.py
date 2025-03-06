@@ -7,7 +7,6 @@ class TextModel:
         self.order = order
         self.model = defaultdict(lambda: defaultdict(int))
 
-
     def train(self, text_):
         # обработка
         text_ = text_.strip()
