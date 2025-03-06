@@ -9,7 +9,7 @@ def convert_quotes(markdown_text):
     res = ''
     change = ['«', '»']  # должно быть из 2 символов.
     if len(change) != 2:
-        raise Exception("Check change length on line 11")
+        raise Exception("Check change length on line 10")
 
     for i in parts:
         for _ in i:  # XDXDXDXD зато своё
