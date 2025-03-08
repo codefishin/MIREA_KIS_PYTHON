@@ -1,10 +1,4 @@
-from math import *
-from functools import reduce
-import operator
-
-
-def prod(iterable):
-    return reduce(operator.mul, iterable, 1)
+from math import prod
 
 
 def main(n, a, m, y):
