@@ -52,12 +52,26 @@ def dist_step(lev, i, j, s1, s2):
     b = lev[i][j - 1] + 1
     c = lev[i - 1][j - 1] + (c1 != c2)
     d = c + 1
-
     lev[i][j] = min(a, b, c, d)
 
 
 @cache
-def lev_dist(param1: str, param2: str):
+def lev_dist(str1: str, str2: str):
+    m = len(str1)
+    n = len(str2)
+    d = [[i] for i in range(1, m + 1)]
+    d.insert(0, list(range(0, n + 1)))
+    for j in range(1, n + 1):
+        for i in range(1, m + 1):
+            substitution_cost = int(str1[i - 1] != str2[j - 1])
+            d[i].insert(j, min(d[i - 1][j] + 1,
+                               d[i][j - 1] + 1,
+                               d[i - 1][j - 1] + substitution_cost))
+    return d[-1][-1]
+
+
+
+def lev_dist2(param1: str, param2: str):
     len1 = len(param1)
     len2 = len(param2)
 
@@ -93,7 +107,7 @@ def lev_dist_ops(param1: str, param2: str):
 
 
 def main():
-    print(lev_dist_ops('столб', 'слон'))
+    print(lev_dist2('столб', 'слон'))
     #print(ham_dist(encode_val(4, 3, 0b1001), encode_val(4, 3, 0b1000)))
 
 if __name__ == "__main__":
