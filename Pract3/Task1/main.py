@@ -3,7 +3,7 @@ import requests
 def AttributeErrorGen() -> int:  # 1
     url = "https://google.com"
     r = requests.get(url)  # выводит ошибку
-    # вывод как в примере в некоторых версиях Python
+    # вывод как в примере только в некоторых версиях Python
     return r.status_code
 
 
@@ -27,11 +27,19 @@ def WorkingWithGLOBAL_VAR():  # 3
     print("GLOBAL_VAR (переменная):", GLOBAL_VAR,
           "\nGLOBAL_VAR из module_theory:", module_theory.getGLOBAL_VAR())
 
+from module_theory import *
+def ControlImportStar():  # 4
+    isLoaded()
+    # getGLOBAL_VAR()  # вызывает ошибку.
+    # хоть и getGLOBAL_VAR() есть в module_theory,
+    # он не будет импортироваться из-за имени __all__
+
 
 def main():
     # AttributeErrorGen()
     # ModuleTheory()
-    WorkingWithGLOBAL_VAR()
+    # WorkingWithGLOBAL_VAR()
+    ControlImportStar()
 
 
 if __name__ == "__main__":
