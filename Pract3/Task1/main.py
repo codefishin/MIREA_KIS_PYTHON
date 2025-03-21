@@ -35,11 +35,27 @@ def ControlImportStar():  # 4
     # он не будет импортироваться из-за имени __all__
 
 
+def load_config(filename):  # 5
+    """
+    Плюсы импорта: Безопасность, лёгкая отладка
+    Минусы импорта: Зависимость от структуры модуля
+    Плюсы прямого кода: Удобство, гибкость
+    Минусы прямого кода: Опасность, сложность
+    :param filename:
+    :return:
+    """
+    cfg = {}
+    with open(filename) as f:
+        exec(f.read(), {}, cfg)
+    return cfg
+
+
 def main():
     # AttributeErrorGen()
     # ModuleTheory()
     # WorkingWithGLOBAL_VAR()
-    ControlImportStar()
+    # ControlImportStar()
+    print(load_config("filename.txt"))
 
 
 if __name__ == "__main__":
